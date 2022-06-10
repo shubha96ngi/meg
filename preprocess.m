@@ -7,30 +7,30 @@ X2={}
 for i = 1:29
     name = sprintf('/media/ubuntu/HDD_P1/shubh/training/dementia/hokuto_dementia%d.mat',i);
     A = load(name)
-    % 10 second epoch with 50% overlap
+        
+    % 10 second epoch with 
+    
     cfg = [];
     cfg.dataset = sprintf('/media/ubuntu/HDD_P1/shubh/training/dementia/hokuto_dementia%d.mat',i);
     hdr =  ft_read_header(cfg.dataset);
     cfg.continuous = 'yes';
     data = ft_preprocessing(cfg);
 
+    % selecting meggrad channels only 
+    
     cfg.channel = 'AG*';
     data = ft_selectdata(cfg,data);
     cfg.trialfun             = 'ft_trialfun_general';
     cfg.trialdef.triallength = 10;                   % in seconds
    
-    cfg.trialdef.ntrials     = 30; 
-    %cfg.overlap = 0.5;
+    cfg.trialdef.ntrials     = 30;    % total 30 epochs for 300s data of 10s interval each 
+  
     cfg = ft_definetrial(cfg);
     data = ft_preprocessing(cfg);
     size(data)
-    %cfg.lpfilter = 'yes';
-    %cfg.lpfreq = 80
+  
     data = ft_preprocessing(cfg);
-%     cfg=[];
-%     cfg.resamplefs = 250;
-%     data = ft_resampledata(cfg,data)
-%     data = ft_preprocessing(cfg);
+
     %e = length(A.D.trials.events)
     for j = 1:30
         
@@ -41,7 +41,7 @@ for i = 1:29
         p = X1{j};
         size(p)
 
-        X2{j} = 2;
+        X2{j} = 2;    # label 0 for HC, 1 for MCI, 2 for Dementia
         
     end
 %     for n = 1:e
